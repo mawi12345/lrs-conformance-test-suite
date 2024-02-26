@@ -469,7 +469,7 @@ if (!process.env.EB_NODE_COMMAND) {
          * @returns {integer}
         */
         getTimeMargin: function () {
-                return TIME_MARGIN;
+                return TIME_MARGIN || 0;
         },
         /**
          * Sends an HTTP request using supertest
