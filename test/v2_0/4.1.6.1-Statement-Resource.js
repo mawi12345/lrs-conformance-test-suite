@@ -1097,8 +1097,10 @@ describe('Statement Resource Requirements (Communication 2.1)', () => {
                     var statement = JSON.parse(res.body);
                     // console.log(require("util").inspect(statement,{depth:7}));
                     expect(statement.verb.display).not.to.have.property("en-US");
-                    expect(statement.context.contextActivities.category[0].definition.description).not.to.have.property("en-US");
-                    expect(statement.context.contextActivities.category[0].definition.name).not.to.have.property("en-US");
+                    // Note: the spec allows for a single item or a list
+                    var category = statement.context.contextActivities.category.length ? statement.context.contextActivities.category[0] : statement.context.contextActivities.category;
+                    expect(category.definition.description).not.to.have.property("en-US");
+                    expect(category.definition.name).not.to.have.property("en-US");
                     done(err);
                 });
         });
@@ -1117,14 +1119,18 @@ describe('Statement Resource Requirements (Communication 2.1)', () => {
                     if (err) console.log(err);
 
                     var statement = JSON.parse(res.body);
+
+                    // Note: the spec allows for a single item or a list
+                    var category = statement.context.contextActivities.category.length ? statement.context.contextActivities.category[0] : statement.context.contextActivities.category;
+
                     // console.log(require("util").inspect(statement,{depth:7}));
                     expect(statement.verb.display).to.have.property("en-US");
-                    expect(statement.context.contextActivities.category[0].definition.description).to.have.property("en-US");
-                    expect(statement.context.contextActivities.category[0].definition.name).to.have.property("en-US");
+                    expect(category.definition.description).to.have.property("en-US");
+                    expect(category.definition.name).to.have.property("en-US");
 
                     expect(statement.verb.display).to.have.property("en-GB");
-                    expect(statement.context.contextActivities.category[0].definition.description).to.have.property("en-GB");
-                    expect(statement.context.contextActivities.category[0].definition.name).to.have.property("en-GB");
+                    expect(category.definition.description).to.have.property("en-GB");
+                    expect(category.definition.name).to.have.property("en-GB");
                     done(err);
                 });
         });
