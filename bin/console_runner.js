@@ -1,11 +1,8 @@
 var program = require('commander');
 var TestRunner = require('./testRunner.js').testRunner;
-var jsonSchema = require('jsonschema');
-var validate = jsonSchema.validate;
 var colors = require('colors');
 var libpath = require('path');
 var fs = require('fs');
-const specConfig = require("../specConfig");
 
 require('pretty-error').start();
 
@@ -34,6 +31,7 @@ program
     .option('-b, --bail', 'Abort the battery if one test fails.')
     .option('-d, --directory [value]', 'Specific directories of tests (as a comma-separated list with no spaces).', clean_dir, [...[]])
     .option('-z, --errors', 'Results log of failing tests only.')
+    .option('-n, --nice', 'Print the error log in a more human-readable format.')
     .parse(process.argv);
 
 var options = {
@@ -51,45 +49,8 @@ var options = {
     grep: program.grep,
     bail: program.bail,
     directory: program.directory,
-    errors: program.errors
+    errors: program.errors,
 }
-
-/*
-var valid = validate(options, {
-    type: "object",
-    properties: {
-        endpoint: {
-            type: "string",
-            format: "uri"
-        },
-        authUser: {
-            type: "string"
-        },
-        authPass: {
-            type: "string"
-        }
-    },
-    required: ["endpoint", "authPass", "authUser"]
-})
-
-
-if (valid.errors.length) {
-    program.help();
-}*/
-
-/*testRunner.on("statusMessage", function(message) {
-    if (message.action == 'log')
-        console.log(colors.white.bold(message.action) + ": " + message.payload);
-    if (message.action == 'test fail')
-    {
-        console.log(colors.red.bold(message.action) + ": " + message.payload.title);
-        console.log(colors.red.bold(message.payload.message));
-    }
-    if (message.action == 'test pass')
-        console.log(colors.green.bold(message.action) + ": " + message.payload);
-    if (message.action == 'suite')
-        console.log("\n" + colors.white.bold(message.action) + ": ", colors.white.bold(message.payload) + "\n");
-});*/
 
 var testRunner = null;
 
@@ -103,6 +64,21 @@ process.on('SIGINT', function() {
 process.on('exit', function() {
     console.log(colors.white('Closed'));
 });
+
+function printHumanReadableLog(test, level) {
+  if (!test) return;
+  var hasChildren = test.tests && test.tests.length > 0;
+  var indent = Array(level).join(" ");
+  console.log();
+  console.log(indent + (hasChildren ? '🤜' : '❗️') +' ' + (test.name || "Test"));
+  if (hasChildren) {
+    test.tests.forEach(function(test) {
+      printHumanReadableLog(test, level + 2);
+    });
+  } else {
+    console.log(indent + "   " + test.status + ": " + test.error.replace(/\n/g, "\n" + indent + "           "));
+  }
+}
 
 function start(options)
 {
@@ -185,6 +161,11 @@ function start(options)
 						return process.exit(1);
 					}
 					console.log('Full run log written to', outPath);
+
+          if (program.nice) {
+            printHumanReadableLog(removeNulls(cleanLog.log), 0);
+          }
+
 					return process.exit(testRunner.summary.failed);
 				});
 			});
