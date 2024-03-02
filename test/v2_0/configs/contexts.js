@@ -251,90 +251,91 @@
                     }
                 ]
             },
-            {
-            /**  XAPI-00084, Data 2.4.6 Context
-            * A Statement cannot contain both a "revision" property in its "context" property and have the value of the "object" property's "objectType" be anything but "Activity". The LRS rejects a statement with 400 Bad Request if contains a "revision" property in its "context" property and does not have an Object with an “objectType” value of “activity” or an Object where the “objectType” property is absent.
-            */
-                name: 'A Statement cannot contain both a "revision" property in its "context" property and have the value of the "object" property\'s "objectType" be anything but "Activity" (Data 2.4.6.s4.b1, XAPI-00084)',
-                config: [
-                    {
-                        name: 'statement context "revision" is invalid with object agent',
-                        templates: [
-                            {statement: '{{statements.object_agent_default}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement context "revision" is invalid with object group',
-                        templates: [
-                            {statement: '{{statements.object_group_default}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement context "revision" is invalid with statementref',
-                        templates: [
-                            {statement: '{{statements.object_statementref}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement context "revision" is invalid with substatement',
-                        templates: [
-                            {statement: '{{statements.object_substatement_default}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement context "revision" is valid with no ObjectType',
-                        templates: [
-                            {statement: '{{statements.context_sans_objectType}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [200]
-                    },
-                    {
-                        name: 'statement substatement context "revision" is invalid with object agent',
-                        templates: [
-                            {statement: '{{statements.object_substatement}}'},
-                            {object: '{{substatements.agent_default}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement substatement context "revision" is invalid with object group',
-                        templates: [
-                            {statement: '{{statements.object_substatement}}'},
-                            {object: '{{substatements.group_default}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement substatement context "revision" is invalid with statementref',
-                        templates: [
-                            {statement: '{{statements.object_substatement}}'},
-                            {object: '{{substatements.statementref}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement substatement context "revision" is valid with no objectType',
-                        templates: [
-                            {statement: '{{statements.object_substatement}}'},
-                            {object: '{{statements.context_sans_objectType}}'},
-                            {context: '{{contexts.no_platform}}'}
-                        ],
-                        expect: [200]
-                    }
-                ]
-            },
+            // Can not find anything in the spec that says this is invalid
+            // {
+            // /**  XAPI-00084, Data 2.4.6 Context
+            // * A Statement cannot contain both a "revision" property in its "context" property and have the value of the "object" property's "objectType" be anything but "Activity". The LRS rejects a statement with 400 Bad Request if contains a "revision" property in its "context" property and does not have an Object with an “objectType” value of “activity” or an Object where the “objectType” property is absent.
+            // */
+            //     name: 'A Statement cannot contain both a "revision" property in its "context" property and have the value of the "object" property\'s "objectType" be anything but "Activity" (Data 2.4.6.s4.b1, XAPI-00084)',
+            //     config: [
+            //         {
+            //             name: 'statement context "revision" is invalid with object agent',
+            //             templates: [
+            //                 {statement: '{{statements.object_agent_default}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement context "revision" is invalid with object group',
+            //             templates: [
+            //                 {statement: '{{statements.object_group_default}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement context "revision" is invalid with statementref',
+            //             templates: [
+            //                 {statement: '{{statements.object_statementref}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement context "revision" is invalid with substatement',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement_default}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement context "revision" is valid with no ObjectType',
+            //             templates: [
+            //                 {statement: '{{statements.context_sans_objectType}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [200]
+            //         },
+            //         {
+            //             name: 'statement substatement context "revision" is invalid with object agent',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement}}'},
+            //                 {object: '{{substatements.agent_default}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement substatement context "revision" is invalid with object group',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement}}'},
+            //                 {object: '{{substatements.group_default}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement substatement context "revision" is invalid with statementref',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement}}'},
+            //                 {object: '{{substatements.statementref}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement substatement context "revision" is valid with no objectType',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement}}'},
+            //                 {object: '{{statements.context_sans_objectType}}'},
+            //                 {context: '{{contexts.no_platform}}'}
+            //             ],
+            //             expect: [200]
+            //         }
+            //     ]
+            // },
             {
             /**  XAPI-00090, Data 2.4.6 Context
              * A "platform" property is a String. The LRS rejects with 400 Bad Request a statement with a “platform” property which is not a valid string.
@@ -381,90 +382,91 @@
                     }
                 ]
             },
-            {
-            /**  XAPI-00085, Data 2.4.6 Context
-            * A Statement cannot contain a "platform" property in its "context" property and have the value of the "object" property's "objectType" be anything but "Activity". The LRS rejects a statement with 400 Bad Request if contains a "platform" property in its "context" property and does not have an Object with an “objectType” value of “activity” or an Object where the “objectType” property is absent.
-            */
-                name: 'A Statement cannot contain both a "platform" property in its "context" property and have the value of the "object" property\'s "objectType" be anything but "Activity" (Data 2.4.6.s4.b2, XAPI-00085)',
-                config: [
-                    {
-                        name: 'statement context "platform" is invalid with object agent',
-                        templates: [
-                            {statement: '{{statements.object_agent_default}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement context "platform" is invalid with object group',
-                        templates: [
-                            {statement: '{{statements.object_group_default}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement context "platform" is invalid with statementref',
-                        templates: [
-                            {statement: '{{statements.object_statementref}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement context "platform" is invalid with substatement',
-                        templates: [
-                            {statement: '{{statements.object_substatement_default}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement context "platform" is valid with empty objectType',
-                        templates: [
-                            {statement: '{{statements.context_sans_objectType}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [200]
-                    },
-                    {
-                        name: 'statement substatement context "platform" is invalid with object agent',
-                        templates: [
-                            {statement: '{{statements.object_substatement}}'},
-                            {object: '{{substatements.agent_default}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement substatement context "platform" is invalid with object group',
-                        templates: [
-                            {statement: '{{statements.object_substatement}}'},
-                            {object: '{{substatements.group_default}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement substatement context "platform" is invalid with statementref',
-                        templates: [
-                            {statement: '{{statements.object_substatement}}'},
-                            {object: '{{substatements.statementref}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [400]
-                    },
-                    {
-                        name: 'statement substatement context "platform" is valid with empty ObjectType',
-                        templates: [
-                            {statement: '{{statements.object_substatement}}'},
-                            {object: '{{statements.context_sans_objectType}}'},
-                            {context: '{{contexts.no_revision}}'}
-                        ],
-                        expect: [200]
-                    }
-                ]
-            },
+            // Can not find anything in the spec that says this is invalid
+            // {
+            // /**  XAPI-00085, Data 2.4.6 Context
+            // * A Statement cannot contain a "platform" property in its "context" property and have the value of the "object" property's "objectType" be anything but "Activity". The LRS rejects a statement with 400 Bad Request if contains a "platform" property in its "context" property and does not have an Object with an “objectType” value of “activity” or an Object where the “objectType” property is absent.
+            // */
+            //     name: 'A Statement cannot contain both a "platform" property in its "context" property and have the value of the "object" property\'s "objectType" be anything but "Activity" (Data 2.4.6.s4.b2, XAPI-00085)',
+            //     config: [
+            //         {
+            //             name: 'statement context "platform" is invalid with object agent',
+            //             templates: [
+            //                 {statement: '{{statements.object_agent_default}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement context "platform" is invalid with object group',
+            //             templates: [
+            //                 {statement: '{{statements.object_group_default}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement context "platform" is invalid with statementref',
+            //             templates: [
+            //                 {statement: '{{statements.object_statementref}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement context "platform" is invalid with substatement',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement_default}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement context "platform" is valid with empty objectType',
+            //             templates: [
+            //                 {statement: '{{statements.context_sans_objectType}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [200]
+            //         },
+            //         {
+            //             name: 'statement substatement context "platform" is invalid with object agent',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement}}'},
+            //                 {object: '{{substatements.agent_default}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement substatement context "platform" is invalid with object group',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement}}'},
+            //                 {object: '{{substatements.group_default}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement substatement context "platform" is invalid with statementref',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement}}'},
+            //                 {object: '{{substatements.statementref}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [400]
+            //         },
+            //         {
+            //             name: 'statement substatement context "platform" is valid with empty ObjectType',
+            //             templates: [
+            //                 {statement: '{{statements.object_substatement}}'},
+            //                 {object: '{{statements.context_sans_objectType}}'},
+            //                 {context: '{{contexts.no_revision}}'}
+            //             ],
+            //             expect: [200]
+            //         }
+            //     ]
+            // },
             {
             /**  XAPI-00091, Data 2.4.6 Context
              * A "language" property is a String which follows RFC 5646. The LRS rejects with 400 Bad Request a statement with a “language” property which is not a valid RFC 5646 string.
