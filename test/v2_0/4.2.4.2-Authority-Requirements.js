@@ -24,20 +24,21 @@ describe('Authority Property Requirements (Data 2.4.9)', () => {
 /**  XAPI-00100, Data 2.4.9 Authority
  * An LRS rejects with error code 400 Bad Request, a Request whose "authority" is a Group having more than two Agents
  */
-    it('An LRS rejects with error code 400 Bad Request, a Request whose "authority" is a Group and consists of non-O-Auth Agents (Data 2.4.9.s3.b3, XAPI-00100)', function (done) {
-        var templates = [
-            {statement: '{{statements.default}}'},
-            {authority: {"objectType": "Group", "name": "xAPI Group", "mbox": "mailto:xapigroup@example.com",
-            "member":[{"name":"agentA","mbox":"mailto:agentA@example.com"},{"name":"agentB","mbox":"mailto:agentB@example.com"}]}}
-        ];
-        var data = helper.createFromTemplate(templates);
-        data = data.statement;
-        request(helper.getEndpointAndAuth())
-            .post(helper.getEndpointStatements())
-            .headers(helper.addAllHeaders({}))
-            .json(data)
-            .expect(400, done)
-    });
+    // Can not find anything in the spec that says this is invalid
+    // it('An LRS rejects with error code 400 Bad Request, a Request whose "authority" is a Group and consists of non-O-Auth Agents (Data 2.4.9.s3.b3, XAPI-00100)', function (done) {
+    //     var templates = [
+    //         {statement: '{{statements.default}}'},
+    //         {authority: {"objectType": "Group", "name": "xAPI Group", "mbox": "mailto:xapigroup@example.com",
+    //         "member":[{"name":"agentA","mbox":"mailto:agentA@example.com"},{"name":"agentB","mbox":"mailto:agentB@example.com"}]}}
+    //     ];
+    //     var data = helper.createFromTemplate(templates);
+    //     data = data.statement;
+    //     request(helper.getEndpointAndAuth())
+    //         .post(helper.getEndpointStatements())
+    //         .headers(helper.addAllHeaders({}))
+    //         .json(data)
+    //         .expect(400, done)
+    // });
 
 /**  XAPI-00099, Data 2.4.9 Authority
  * An LRS populates the "authority" property if it is not provided in the Statement
