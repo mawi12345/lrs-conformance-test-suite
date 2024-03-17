@@ -62,11 +62,13 @@ if (global.OAUTH != undefined) {
         verifier: global.OAUTH.verifier,
     });
 }
-else {  
+else if (process.env.BASIC_AUTH_ENABLED === 'true') {  
     let user = process.env.BASIC_AUTH_USER;
     let pass = process.env.BASIC_AUTH_PASSWORD;
 
     axios.defaults.headers.common["Authorization"] = "Basic " + Buffer.from(user + ':' + pass).toString("base64");
+} else if (process.env.BEARER_AUTH_ENABLED === 'true') {  
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + process.env.BEARER_AUTH_TOKEN;
 }
 
 /**

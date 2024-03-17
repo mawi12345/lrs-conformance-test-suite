@@ -108,6 +108,9 @@ if (!process.env.EB_NODE_COMMAND) {
                 var userPass = new Buffer(process.env.BASIC_AUTH_USER + ':' + process.env.BASIC_AUTH_PASSWORD).toString('base64');
                 newHeader['Authorization'] = 'Basic ' + userPass;
             }
+            if (process.env.BEARER_AUTH_ENABLED === 'true') {
+              newHeader['Authorization'] = 'Bearer ' + process.env.BEARER_AUTH_TOKEN;
+            }
             return newHeader;
         },
         /**
@@ -318,14 +321,6 @@ if (!process.env.EB_NODE_COMMAND) {
         },
         getEndpointAndAuth: function () {
             return LRS_ENDPOINT;
-            var urlparams =  {url:LRS_ENDPOINT};
-
-            if(global.OAUTH)
-            {
-                console.log(global.OAUTH);
-              //  urlparams.oauth = global.OAUTH;
-            }
-            return urlparams;
         },
         /**
          * Returns endpoint to statements.
@@ -456,7 +451,6 @@ if (!process.env.EB_NODE_COMMAND) {
 
             if (!fileExists) {
                 throw (new Error('Invalid configuration "missing name": ' + fileName));
-                return false;
             }
 
             var configFile = require(CONFIG_FOLDER_RELATIVE + '/' + fileName);
@@ -493,7 +487,7 @@ if (!process.env.EB_NODE_COMMAND) {
                 pre.send(body);
             }
             pre.set('X-Experience-API-Version', headers['X-Experience-API-Version']);
-            if (process.env.BASIC_AUTH_ENABLED === 'true') {
+            if (process.env.BASIC_AUTH_ENABLED === 'true' || process.env.BEARER_AUTH_ENABLED === 'true') {
                 pre.set('Authorization', headers['Authorization']);
             }
             //If we're doing oauth, set it up!
@@ -978,7 +972,6 @@ if (!process.env.EB_NODE_COMMAND) {
         configurations.forEach(function (configuration) {
             if (!configuration.name) {
                 throw (new Error('Invalid configuration "missing name": ' + location));
-                return false;
             } else if (!Array.isArray(configuration.config)) {
                 throw (new Error('Invalid configuration "config not array": ' + location));
             }

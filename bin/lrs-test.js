@@ -206,6 +206,10 @@ const specConfig = require('../specConfig');
         process.env.BASIC_AUTH_PASSWORD = options.authPass;
         process.env.OAUTH1_ENABLED = options.oAuth1;
         process.env.XAPI_VERSION = options.xapiVersion;
+        if (options.token) {
+          process.env.BEARER_AUTH_ENABLED = 'true';
+          process.env.BEARER_AUTH_TOKEN = options.token;
+        }
 
         if(options.oAuth1)
         {

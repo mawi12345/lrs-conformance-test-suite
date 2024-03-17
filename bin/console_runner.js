@@ -32,6 +32,7 @@ program
     .option('-d, --directory [value]', 'Specific directories of tests (as a comma-separated list with no spaces).', clean_dir, [...[]])
     .option('-z, --errors', 'Results log of failing tests only.')
     .option('-n, --nice', 'Print the error log in a more human-readable format.')
+    .option('-f, --token [string]', 'Use bearer token')
     .parse(process.argv);
 
 var options = {
@@ -50,6 +51,7 @@ var options = {
     bail: program.bail,
     directory: program.directory,
     errors: program.errors,
+    token: program.token
 }
 
 var testRunner = null;
